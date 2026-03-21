@@ -83,43 +83,40 @@ typedef struct s_data
 
 /* --- Function Prototypes --- */
 
-// Signals (You)
+/* ================= SSIGNALS ================= */
 void    init_signals(void);
 
 // Parser (Your Partner)
-int         parse_input(char *line, t_data *data);
-void        free_cmds(t_cmd *cmds);
-char	*get_cmd_path(char *cmd, char **envp);
+int			parse_input(char *line, t_data *data);
+void		free_cmds(t_cmd *cmds);
+char		*get_cmd_path(char *cmd, char **envp);
 t_token		*tokenize(char *line);
 t_token		*ft_new_token(char *value, t_token_type type);
 void		ft_token_add_back(t_token **head, t_token *new);
 void		free_tokens(t_token *head);
 
-// Executor (You)
+/* ================= EXECUTOR ================= */
 int     executor(t_data *data);
 void    handle_redirections(t_cmd *cmd);
 char    *find_path(char *cmd, char **envp);
 
-// Builtins (Shared)
-int     is_builtin(char *cmd);
-void    exec_builtin(t_cmd *cmd, t_data *data);
-
 /* ================= BUILTINS ================= */
-
-int      builtin_echo(char **args);
-int      builtin_cd(char **args, t_shell *shell);
-int      builtin_pwd(void);
-int      builtin_env(t_env *env);
-int      builtin_export(char **args, t_shell *shell);
-int      builtin_unset(char **args, t_shell *shell);
-int      builtin_exit(char **args, t_shell *shell);
+int		is_builtin(char *cmd);
+void	exec_builtin(t_cmd *cmd, t_data *data);
+int		builtin_echo(char **args);
+int		builtin_cd(char **args, t_shell *shell);
+int		builtin_pwd(void);
+int		builtin_env(t_env *env);
+int		builtin_export(char **args, t_shell *shell);
+int		builtin_unset(char **args, t_shell *shell);
+int		builtin_exit(char **args, t_shell *shell);
 
 /* ================= ENV ================= */
 
-t_env    *env_init(char **envp);
-char     *env_get(t_env *env, char *key);
-void     env_set(t_env **env, char *key, char *value);
-void     env_unset(t_env **env, char *key);
+t_env	*env_init(char **envp);
+char	*env_get(t_env *env, char *key);
+void	env_set(t_env **env, char *key, char *value);
+void	env_unset(t_env **env, char *key);
 char	*get_env_value(char *var_name, t_shell *shell);
 char	*expand_variables(char *input, t_shell *shell);
 
