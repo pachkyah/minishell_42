@@ -31,5 +31,22 @@ typedef struct s_shell {
 	char	**env;
 	int		last_status;
 } t_shell;
+/* Типы токенов */
+typedef enum e_token_type {
+	TOKEN_WORD,
+	TOKEN_PIPE,
+	TOKEN_REDIR
+} t_token_type;
 
+/* Структура токена */
+typedef struct s_token {
+	char			*value;
+	t_token_type	type;
+	struct s_token	*next;
+} t_token;
+
+t_token		*tokenize(char *line);
+t_token		*ft_new_token(char *value, t_token_type type);
+void		ft_token_add_back(t_token **head, t_token *new);
+void		free_tokens(t_token *head);
 #endif
