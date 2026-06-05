@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   minishell.h                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ypachkou <ypachkou@student.42prague.com    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2026/06/05 16:22:32 by ypachkou          #+#    #+#             */
+/*   Updated: 2026/06/05 16:22:32 by ypachkou         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
@@ -60,8 +72,11 @@ typedef struct s_shell {
 /* Token types */
 typedef enum e_token_type {
 	TOKEN_WORD,
-	TOKEN_PIPE,
-	TOKEN_REDIR
+    TOKEN_PIPE,
+    TOKEN_REDIR_IN,
+    TOKEN_REDIR_OUT,
+    TOKEN_APPEND,
+    TOKEN_HEREDOC
 } t_token_type;
 
 /* Token structure */
@@ -81,48 +96,62 @@ typedef struct s_data
     int             stdout_bak; // Backup of original STDOUT
 }   t_data;
 
+
+/* t_shell and t_date have the same variables with different names
+    can be replaced with 1 struct*/
+// typedef struct s_shell
+// {
+//     t_cmd   *cmds;
+//     t_env   *env_list;
+//     char    **envp;
+//     int     last_status;
+//     int     stdin_bak;
+//     int     stdout_bak;
+// } t_shell;
+
+
 /* --- Function Prototypes --- */
 
 /* ================= SSIGNALS ================= */
 void    init_signals(void);
 
 // Parser (Your Partner)
-int			parse_input(char *line, t_data *data);
-void		free_cmds(t_cmd *cmds);
-char		*get_cmd_path(char *cmd, char **envp);
+int			parse_input(char *line, t_data *data); //TODO: maybe the same as tokenize
+void		free_cmds(t_cmd *cmds); //TODO:
+char		*get_cmd_path(char *cmd, char **envp); //TODO:
 t_token		*tokenize(char *line);
-t_token		*ft_new_token(char *value, t_token_type type);
-void		ft_token_add_back(t_token **head, t_token *new);
-void		free_tokens(t_token *head);
+t_token		*ft_new_token(char *value, t_token_type type); //TODO:
+void		ft_token_add_back(t_token **head, t_token *new); //TODO:
+void		free_tokens(t_token *head); //TODO:
 
 /* ================= EXECUTOR ================= */
-int     executor(t_data *data);
-void    handle_redirections(t_cmd *cmd);
-char    *find_path(char *cmd, char **envp);
+int     executor(t_data *data); //TODO: 
+void    handle_redirections(t_cmd *cmd); //TODO:
+char    *find_path(char *cmd, char **envp); //TODO:
 
 /* ================= BUILTINS ================= */
-int		is_builtin(char *cmd);
-void	exec_builtin(t_cmd *cmd, t_data *data);
-int		builtin_echo(char **args);
-int		builtin_cd(char **args, t_shell *shell);
-int		builtin_pwd(void);
-int		builtin_env(t_env *env);
-int		builtin_export(char **args, t_shell *shell);
-int		builtin_unset(char **args, t_shell *shell);
-int		builtin_exit(char **args, t_shell *shell);
+int		is_builtin(char *cmd); //TODO:
+void	exec_builtin(t_cmd *cmd, t_data *data); //TODO:
+int		builtin_echo(char **args); //TODO:
+int		builtin_cd(char **args, t_shell *shell); //TODO:
+int		builtin_pwd(void); //TODO:
+int		builtin_env(t_env *env); //TODO:
+int		builtin_export(char **args, t_shell *shell); //TODO:
+int		builtin_unset(char **args, t_shell *shell); //TODO:
+int		builtin_exit(char **args, t_shell *shell); //TODO:
 
 /* ================= ENV ================= */
 
-t_env	*env_init(char **envp);
-char	*env_get(t_env *env, char *key);
-void	env_set(t_env **env, char *key, char *value);
-void	env_unset(t_env **env, char *key);
-char	*get_env_value(char *var_name, t_shell *shell);
-char	*expand_variables(char *input, t_shell *shell);
+t_env	*env_init(char **envp); //TODO:
+char	*env_get(t_env *env, char *key); //TODO:
+void	env_set(t_env **env, char *key, char *value); //TODO:
+void	env_unset(t_env **env, char *key); //TODO:
+char	*get_env_value(char *var_name, t_shell *shell); //TODO:
+char	*expand_variables(char *input, t_shell *shell); //TODO:
 
 /* ================= UTILS ================= */
 
-void     error_msg(char *msg);
-void     free_split(char **arr);
+void     error_msg(char *msg); //TODO:
+void     free_split(char **arr); //TODO:
 
 #endif

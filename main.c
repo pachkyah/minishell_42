@@ -6,7 +6,7 @@
 /*   By: ypachkou <ypachkou@student.42prague.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/14 20:07:21 by kamelina          #+#    #+#             */
-/*   Updated: 2026/03/21 19:00:08 by ypachkou         ###   ########.fr       */
+/*   Updated: 2026/06/05 17:26:29 by ypachkou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,34 +28,78 @@
  *
  * @return int Returns 0 upon normal termination.
  */
-int main(int argc, char **argv, char **envp)
+int	main(int argc, char **argv, char **envp)
 {
-	char	*line;
 	t_shell	shell;
 
-	// (void)argc; (void)argv;
-	// shell.env = envp;
-	// shell.last_status = 0;
+	(void)argc;
+	(void)argv;
 
-    shell.env = env_init(envp);
+	shell_init(&shell, envp);
+	shell_loop(&shell);
+	shell_destroy(&shell);
 
-	while (1)
-	{
-		line = readline("minishell> ");
-		if (!line)
-			break ;
-		
-		if (*line)
-			add_history(line);
-		
-		t_token *tokens = tokenize(line);
-        t_cmd *cmds = parse_tokens(tokens);
-
-        execute_commands(cmds, &shell);
-
-        free_tokens(tokens);
-        free_cmds(cmds);
-        free(line);
-	}
 	return (0);
 }
+
+
+// int main(int argc, char **argv, char **envp)
+// {
+// 	char	*line;
+// 	t_shell	shell;
+// 	t_token	*tokens;
+// 	t_cmd	*cmds;
+
+// 	(void)argc;
+// 	(void)argv;
+
+// 	shell.env = env_init(envp);
+// 	shell.last_status = 0;
+
+// 	init_signals();
+
+// 	while (1)
+// 	{
+// 		line = readline("minishell> ");
+// 		if (!line)
+// 		{
+// 			printf("exit\n");
+// 			break ;
+// 		}
+		
+// 		if (*line)
+// 			add_history(line);
+
+// 		tokens = tokenize(line);
+// 		if (!tokens)
+// 		{
+// 			free(line);
+// 			continue ;
+// 		}
+
+// 		if (!syntax_check(tokens))
+// 		{
+// 			free_tokens(tokens);
+// 			free(line);
+// 			continue ;
+// 		}
+
+// 		cmds = parse_tokens(tokens);
+// 		if (!cmds)
+// 		{
+// 			free_tokens(tokens);
+// 			free(line);
+// 			continue ;
+// 		}
+
+// 		shell.last_status = execute_commands(cmds, &shell);
+
+// 		free_tokens(tokens);
+// 		free_cmds(cmds);
+// 		free(line);
+// 	}
+
+// 	free_env(shell.env);
+// 	rl_clear_history();
+// 	return (0);
+// }

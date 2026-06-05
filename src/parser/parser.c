@@ -56,8 +56,10 @@ static t_token_type	get_token_type(char *val)
 {
 	if (val[0] == '|')
 		return (TOKEN_PIPE);
-	if (val[0] == '<' || val[0] == '>')
-		return (TOKEN_REDIR);
+	if (val[0] == '<')
+		return (TOKEN_REDIR_IN);
+	if (val[0] == '>')
+		return (TOKEN_REDIR_OUT);
 	return (TOKEN_WORD);
 }
 
